@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAT-DREW | Meble na wymiar</title>
+<meta name="description" content="PAT-DREW — nowoczesne meble na wymiar w Małopolsce. Kuchnie, garderoby, zabudowy i meble dopasowane do wnętrza.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0b0a;--panel:#141412;--text:#f3f0e9;--muted:#aaa69d;--line:rgba(255,255,255,.11);--accent:#c8a56a}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+a{color:inherit;text-decoration:none}
+.container{width:min(1160px,92%);margin:auto}
+header{position:fixed;top:0;left:0;right:0;z-index:10;background:rgba(11,11,10,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{height:78px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:800;letter-spacing:2px}.logo span{color:var(--accent)}
+nav{display:flex;gap:30px;color:#d2cec5;font-size:14px}
+nav a:hover{color:white}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 22px;border:1px solid rgba(200,165,106,.55);background:var(--accent);color:#17130d;font-weight:700;border-radius:2px;transition:.25s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.btn.outline{background:transparent;color:var(--text);border-color:var(--line)}
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:
+linear-gradient(90deg,rgba(7,7,6,.98) 0%,rgba(7,7,6,.76) 48%,rgba(7,7,6,.3) 100%),
+radial-gradient(circle at 78% 48%,#4b3c29 0,#1d1913 25%,#0b0b0a 65%)}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,var(--bg),transparent 28%);pointer-events:none}
+.hero-content{position:relative;z-index:1;max-width:760px;padding-top:80px}
+.kicker{color:var(--accent);text-transform:uppercase;letter-spacing:3px;font-size:12px;font-weight:700;margin-bottom:20px}
+h1{font-size:clamp(48px,7vw,92px);line-height:.98;letter-spacing:-3px;margin-bottom:25px}
+h1 em{font-style:normal;color:#cfc9bc}
+.hero p{font-size:19px;color:#c1bdb4;max-width:620px;margin-bottom:34px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+section{padding:110px 0}
+.section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:45px}
+.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px}
+h2{font-size:clamp(34px,5vw,58px);line-height:1.05;letter-spacing:-2px}
+.section-head p{max-width:470px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);padding:30px;min-height:250px}
+.card .num{color:var(--accent);font-size:13px;margin-bottom:55px}
+.card h3{font-size:23px;margin-bottom:10px}.card p{color:var(--muted);font-size:15px}
+.realizations{background:#f0ede7;color:#161513}
+.realizations .section-head p{color:#67635d}
+.projects{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+.project{min-height:350px;padding:28px;display:flex;align-items:end;position:relative;overflow:hidden;background:linear-gradient(135deg,#5d513f,#24221e)}
+.project:nth-child(2){background:linear-gradient(135deg,#31302c,#8a7960)}
+.project:nth-child(3){background:linear-gradient(135deg,#786e5e,#252522)}
+.project:nth-child(4){background:linear-gradient(135deg,#242321,#6b6255)}
+.project.big{min-height:520px;grid-row:span 2}
+.project:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.7),transparent 65%)}
+.project-info{position:relative;z-index:1;color:white}.project-info small{color:#ddd1ba}.project-info h3{font-size:25px;margin-top:5px}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.about-copy p{color:var(--muted);font-size:17px;margin:18px 0}
+.checks{display:grid;gap:13px;margin-top:28px}.check{display:flex;gap:12px}.check b{color:var(--accent)}
+.process{background:#11110f}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+.step{background:#11110f;padding:28px;min-height:210px}.step strong{font-size:13px;color:var(--accent)}.step h3{margin:40px 0 9px}.step p{color:var(--muted);font-size:14px}
+.contact{background:#f0ede7;color:#171613}
+.contact-wrap{display:grid;grid-template-columns:1fr .9fr;gap:70px}
+.contact p{color:#67635d;margin:18px 0 28px;max-width:530px}
+.contact-box{background:#171613;color:white;padding:34px}.contact-box h3{font-size:27px;margin-bottom:22px}.contact-row{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;gap:15px}.contact-row span{color:#9f9b93}
+footer{padding:30px 0;border-top:1px solid var(--line);color:#77736b;font-size:13px;display:flex;justify-content:space-between}
+@media(max-width:800px){
+nav{display:none}.grid,.projects,.about,.contact-wrap{grid-template-columns:1fr}.project.big{grid-row:auto}.steps{grid-template-columns:1fr 1fr}.section-head{display:block}.section-head p{margin-top:18px}h1{letter-spacing:-2px}
+}
+@media(max-width:520px){section{padding:80px 0}.nav{height:68px}.hero-content{padding-top:55px}.hero p{font-size:17px}.btn{width:100%}.actions{display:grid}.steps{grid-template-columns:1fr}.project{min-height:290px}.project.big{min-height:360px}footer{display:block}.logo{font-size:19px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="logo" href="#">PAT<span>-</span>DREW</a>
+    <nav>
+      <a href="#oferta">Oferta</a><a href="#realizacje">Realizacje</a><a href="#onas">O nas</a><a href="#kontakt">Kontakt</a>
+    </nav>
+    <a class="btn" href="tel:+48661577253">Zadzwoń</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container hero-content">
+    <div class="kicker">Meble na wymiar · Małopolska</div>
+    <h1>Wnętrza stworzone<br><em>dokładnie pod Ciebie.</em></h1>
+    <p>Projektujemy i wykonujemy meble na wymiar, które łączą funkcjonalność, trwałość i nowoczesny charakter.</p>
+    <div class="actions">
+      <a class="btn" href="#kontakt">Zapytaj o wycenę</a>
+      <a class="btn outline" href="#realizacje">Zobacz realizacje</a>
+    </div>
+  </div>
+</section>
+
+<section id="oferta">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="eyebrow">Oferta</div><h2>Robimy meble,<br>które mają sens.</h2></div>
+      <p>Od pojedynczych zabudów po kompletne wnętrza. Każdy projekt dopasowujemy do przestrzeni, potrzeb i budżetu.</p>
+    </div>
+    <div class="grid">
+      <article class="card"><div class="num">01 / KUCHNIE</div><h3>Kuchnie na wymiar</h3><p>Funkcjonalne układy, przemyślane przechowywanie i materiały dopasowane do stylu wnętrza.</p></article>
+      <article class="card"><div class="num">02 / ZABUDOWY</div><h3>Szafy i garderoby</h3><p>Zabudowy pod skosy, wnęki i nietypowe przestrzenie — maksymalne wykorzystanie miejsca.</p></article>
+      <article class="card"><div class="num">03 / WNĘTRZA</div><h3>Meble na wymiar</h3><p>Łazienki, salony, przedpokoje, biura i inne zabudowy wykonane pod konkretną przestrzeń.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="realizations" id="realizacje">
+  <div class="container">
+    <div class="section-head">
+      <div><div class="eyebrow">Portfolio</div><h2>Wybrane realizacje</h2></div>
+      <p>Tu docelowo umieścimy Twoje prawdziwe realizacje. Na start są przygotowane eleganckie pola pod zdjęcia.</p>
+    </div>
+    <div class="projects">
+      <article class="project big"><div class="project-info"><small>WIZUALIZACJA / DO PODMIANY</small><h3>Kuchnia — drewno &amp; czerń</h3></div></article>
+      <article class="project"><div class="project-info"><small>WIZUALIZACJA / DO PODMIANY</small><h3>Zabudowa salonu</h3></div></article>
+      <article class="project"><div class="project-info"><small>WIZUALIZACJA / DO PODMIANY</small><h3>Garderoba</h3></div></article>
+      <article class="project"><div class="project-info"><small>WIZUALIZACJA / DO PODMIANY</small><h3>Łazienka</h3></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="onas">
+  <div class="container about">
+    <div>
+      <div class="eyebrow">PAT-DREW</div>
+      <h2>Dokładność zaczyna się od dobrego projektu.</h2>
+    </div>
+    <div class="about-copy">
+      <p>Tworzymy meble na wymiar z naciskiem na estetykę, praktyczne rozwiązania i solidne wykonanie. Każdy projekt powstaje z myślą o konkretnym wnętrzu.</p>
+      <div class="checks">
+        <div class="check"><b>✓</b><span>Indywidualne podejście do każdego projektu</span></div>
+        <div class="check"><b>✓</b><span>Pomiar i dopasowanie do przestrzeni</span></div>
+        <div class="check"><b>✓</b><span>Materiały i rozwiązania dopasowane do potrzeb</span></div>
+        <div class="check"><b>✓</b><span>Obszar działania: Małopolska</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="container">
+    <div class="section-head"><div><div class="eyebrow">Jak pracujemy</div><h2>Od pomysłu<br>do gotowego wnętrza.</h2></div></div>
+    <div class="steps">
+      <div class="step"><strong>01</strong><h3>Kontakt</h3><p>Opowiadasz nam o pomyśle, potrzebach i przestrzeni.</p></div>
+      <div class="step"><strong>02</strong><h3>Pomiar &amp; projekt</h3><p>Ustalamy wymiary, materiały, funkcje i wygląd zabudowy.</p></div>
+      <div class="step"><strong>03</strong><h3>Produkcja</h3><p>Wykonujemy meble zgodnie z zaakceptowanymi ustaleniami.</p></div>
+      <div class="step"><strong>04</strong><h3>Montaż</h3><p>Gotowa zabudowa trafia do Twojego wnętrza i zostaje dopracowana na miejscu.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="kontakt">
+  <div class="container contact-wrap">
+    <div>
+      <div class="eyebrow">Kontakt</div>
+      <h2>Masz pomysł?<br>Zróbmy z niego mebel.</h2>
+      <p>Opowiedz nam, czego potrzebujesz. Skontaktuj się telefonicznie, a ustalimy kolejne kroki i przygotujemy się do wyceny.</p>
+      <a class="btn" href="tel:+48661577253">661 577 253</a>
+    </div>
+    <div class="contact-box">
+      <h3>PAT-DREW</h3>
+      <div class="contact-row"><span>Telefon</span><a href="tel:+48661577253">661 577 253</a></div>
+      <div class="contact-row"><span>Obszar działania</span><strong>Małopolska</strong></div>
+      <div class="contact-row"><span>Usługi</span><strong>Meble na wymiar</strong></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="container"><span>© 2026 PAT-DREW</span><span>Meble na wymiar · Małopolska</span></footer>
+</body>
+</html>
